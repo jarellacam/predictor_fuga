@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
 import joblib
-import numpy as np
 import os
 
-st.set_page_config(page_title = "Predictor de Fuga de CLientes",
+st.set_page_config(page_title = "Predictor de Fuga de Clientes",
                    layout = "wide")
 
 # Cargamos el modelo y las columnas
@@ -29,7 +28,7 @@ modelo, columnas_modelo = cargar_datos()
 # INTERFAZ GRÁFICA
 st.title("PREDICTOR PÉRDIDA DE CLIENTES")
 st.markdown("""
-            Esta herramienta empple XGBoost para predecir la probabilidad
+            Esta herramienta emplea XGBoost para predecir la probabilidad
             de que un cliente abandone la compañía.
             """)
 
@@ -43,7 +42,7 @@ def caract_cliente():
     factura_total = st.sidebar.number_input('Total Facturado ($)', min_value=18.0, max_value=9000.0, value = factura_mensual * tenencia)
 
     # Variable Categóricas (de mayor importancia)
-    contrato = st.sidebar.selectbox('Tipo de Contrato', ['Month-to-month' , 'One year' , 'Two years'])
+    contrato = st.sidebar.selectbox('Tipo de Contrato', ['Month-to-month' , 'One year' , 'Two year'])
     servicio_internet = st.sidebar.selectbox('Servicio de Internet', ['DSL' , 'Fiber optic' , 'No'])
     metodo_pago = st.sidebar.selectbox('Método de Pago', ['Electronic check' , 'Mailed check' , 'Bank transfer (automatic)' , 'Credit card (automatic)'])
     seguridad_online = st.sidebar.selectbox('Seguridad Online' , ['Yes' , 'No' , 'No internet service'])
@@ -71,7 +70,7 @@ def caract_cliente():
 
 caract = caract_cliente()
 
-# Mostrar los datos elegidos por el uauario
+# Mostrar los datos elegidos por el usuario
 st.subheader('Datos del Cliente: ')
 st.dataframe(caract)
 
@@ -80,25 +79,24 @@ st.dataframe(caract)
 
 # Primero aplicamos One-Hot Encoding a los datos de entrada
 caract_oneHot = pd.get_dummies(caract)
-# Alineamos con las columnas del modelo origibal
+# Alineamos con las columnas del modelo original
 caract_oneHot_final = caract_oneHot.reindex(columns = columnas_modelo, fill_value=0)
 
 # PREDICCIÓN
-if st.button('Calacular Riesgo de Fuga'):
-    #Predeccimos las clases (0 y 1) y su probabilidad
-    prediccion = modelo.predict(caract_oneHot_final)
+if st.button('Calcular Riesgo de Fuga'):
+    # Predecimos las clases (0 y 1) y su probabilidad
     prob = modelo.predict_proba(caract_oneHot_final)
 
     riesgo_abandono = prob[0][1] # Probabilidad de que sea 1
 
-    st.subheader('Resultado del análiss: ')
+    st.subheader('Resultado del análisis: ')
     # Ver resultado
     col1, col2 = st.columns([1,2])
     with col1:
         if riesgo_abandono > 0.5:
-            st.error(f"PELIGRO!!! ALERTA DE FUGA \n\nRiesgo: {riesgo_abandono: .1%}")
+            st.error(f"PELIGRO!!! ALERTA DE FUGA \n\nRiesgo: {riesgo_abandono:.1%}")
         else:
-            st.success(f"Cliente Seguro \n\nRiesgo: {riesgo_abandono: .1%}")
+            st.success(f"Cliente Seguro \n\nRiesgo: {riesgo_abandono:.1%}")
 
     with col2:
         st.write("Probabilidad de Abandono: ")
