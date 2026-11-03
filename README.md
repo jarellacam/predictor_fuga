@@ -1,5 +1,9 @@
 # PREDICTOR DE FUGA DE CLIENTES (CHURN)
 
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-EB5E28) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white) ![Recall](https://img.shields.io/badge/Recall_churn-82%25-2EA44F)
+
+> Pipeline de ML end-to-end que detecta 8 de cada 10 clientes que van a abandonar una teleco, con un simulador web para probar perfiles en tiempo real.
+
 ## DESCRIPCIÓN DEL PROYECTO
 
 Este es un proyecto práctico de **Machine Learning** donde se aplican técnicas de clasificación para resolver un problema de negocio real: **predecir si un cliente va a abandonar una compañía telefónica.**
@@ -23,10 +27,10 @@ El proyecto sigue estos pasos:
 1.  **Limpieza de Datos (EDA):** Se analizó el dataset *Telco Customer Churn*. Se pudo observar que variables como el tipo de contrato o tener fibra óptica influyen mucho.
 2.  **Ingeniería de Características:** Se transformaron las variables de texto (como "Male/Female" o "Yes/No") en números que el ordenador pueda entender.
 3.  **Entrenamiento:** Se entrenó un clasificador **XGBoost**.
-    * *Nota:* Como había muchos más clientes que se quedaban que los que se iban, se tubo que balancear el modelo (usando `scale_pos_weight`) para que aprendiera a detectar bien las fugas.
-4.  **Despliegue:** Se creó una interfaz donde el usuario mover sliders y ver cómo cambia el riesgo de fuga al instante.
+    * *Nota:* Como había muchos más clientes que se quedaban que los que se iban, se tuvo que balancear el modelo (usando `scale_pos_weight`) para que aprendiera a detectar bien las fugas.
+4.  **Despliegue:** Se creó una interfaz donde el usuario puede mover sliders y ver cómo cambia el riesgo de fuga al instante.
 
-## RESULTADOS OBTENNIDOS
+## RESULTADOS OBTENIDOS
 
 Para este problema, lo más importante es **no dejar escapar a nadie**. Por eso, se optimizó el **Recall** (Sensibilidad).
 
@@ -46,32 +50,34 @@ Gracias a la importancia de variables del modelo, aprendí que:
 Organización limpia de carpetas siguiendo buenas prácticas:
 
 ```text
-PREDICTOR/
+predictor_fuga/
 ├── data/                  # El CSV original
 ├── models/                # Aquí se guardan los archivos .pkl (el "cerebro" del modelo)
 ├── src/                   # Código de la aplicación web
 │   └── interfaz.py        
-├── preprocesamiento.ipynb # Mi notebook con todo el código de entrenamiento
-├── requirements.txt       # Librerías necesarias para ejecutarlo
+├── notebooks/
+│   └── preprocesamiento.ipynb # Mi notebook con todo el código de entrenamiento
+├── requerimientos.txt     # Librerías necesarias para ejecutarlo
 └── README.md              
 ```
 
-# CÓMO PROBAR EL PROYECTO
+## CÓMO PROBAR EL PROYECTO
 
 1. Clona el repo:
-    ````
-    git clone [https://github.com/TU_USUARIO/predictor_fuga.git](https://github.com/TU_USUARIO/predictor_fuga.git)
-    cd churn-predictor
-    ````
+    ```bash
+    git clone https://github.com/jarellacam/predictor_fuga.git
+    cd predictor_fuga
+    ```
 2. Instala las librerías:
-    ````
-    pip install -r requirements.txt
-    ````
+    ```bash
+    pip install -r requerimientos.txt
+    ```
 3. Lanza la App:
-    ````
+    ```bash
     streamlit run src/interfaz.py
-    ````
+    ```
 ¡Y listo! Se te abrirá una pestaña en el navegador para jugar con el modelo.
 
-Autor: Juan Arellano Cameo
-Linkedin: www.linkedin.com/in/juann-arellano
+---
+
+**Autor:** Juan Arellano Cameo · [LinkedIn](https://www.linkedin.com/in/juann-arellano) · [GitHub](https://github.com/jarellacam)
